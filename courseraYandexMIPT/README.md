@@ -5,12 +5,20 @@
 
 Курсы:
 
-<a href=https://github.com/nikkutuzov/courseraYandexMIPT/tree/master/1_WhiteBelt>Основы разработки на C++: белый пояс</a>
+<a href=https://github.com/nikkutuzov/CPP_education/tree/master/courseraYandexMIPT/1_WhiteBelt>
+Основы разработки на C++: белый пояс
+</a>
 
-<a href=https://github.com/nikkutuzov/courseraYandexMIPT/tree/master/2_YellowBelt>Основы разработки на C++: желтый пояс</a>
+<a href=https://github.com/nikkutuzov/CPP_education/tree/master/courseraYandexMIPT/2_YellowBelt>
+Основы разработки на C++: желтый пояс
+</a>
 
 Дополнения:
 
-<a href=https://github.com/nikkutuzov/courseraYandexMIPT/tree/master/DOCS>Конспекты курса</a>
+<a href=https://github.com/nikkutuzov/CPP_education/tree/master/courseraYandexMIPT/DOCS>
+Конспекты курса
+</a>
 
-<a href=https://github.com/nikkutuzov/courseraYandexMIPT/tree/master/Templates>Шаблоны заданий к задачам</a>
+<a href=https://github.com/nikkutuzov/CPP_education/tree/master/courseraYandexMIPT/Templates>
+Шаблоны заданий к задачам
+</a>
