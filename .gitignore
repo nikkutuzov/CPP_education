@@ -1,32 +1,13 @@
-# Prerequisites
-*.d
+# MacOS files
+.DS_Store
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# work_files
+work_file.cpp
+tmp.cpp
+a.out
 
-# Precompiled Headers
-*.gch
-*.pch
+# PostScript_files
+*.ps
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# PDF_file
+file.pdf
