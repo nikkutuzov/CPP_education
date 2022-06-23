@@ -2,8 +2,8 @@
 /*                    C++_Development_Basics: The_White_Belt                      */
 /*================================================================================*/
 /*  Tittle: Quadratic Equation                                                    */
-/*  Start_time: 23.06.2022                                                        */
-/*  End_time:                                                                     */
+/*  Start_time: 23.06.2022 11:49                                                  */
+/*  End_time: 23.06.2022 12:22                                                    */
 /*  Note:                                                                         */
 /*================================================================================*/
 
@@ -30,10 +30,43 @@
 /*<=====================================CODE=====================================>*/
 
 #include <iostream>
+#include <cmath>
 
 /*<-------------------------------------main------------------------------------->*/
 
 int main() {
+  double a, b, c;
+  std::cin >> a >> b >> c;
+
+  // найдем дискриминант
+  double discriminant = b * b - 4 * a * c;
+
+  // если a равно нулю, то уравнение линейное: bx + c = 0
+  if (a == 0) {
+    // bx = -c => x = -c / b
+    if (b != 0) {
+      double root = -c / b;
+
+      std::cout << root;
+
+    }
+    // если b равно нулю, корней нет
+    //
+  } else if (discriminant > 0) { // с положительным дискриминантом корня два
+    double rootOne = (-b + std::sqrt(discriminant)) / (2 * a);
+    double rootTwo = (-b - std::sqrt(discriminant)) / (2 * a);
+
+    std::cout << rootOne << " " << rootTwo;
+
+  } else if (discriminant == 0) { // ... с равным нулю - один
+    double root = -b / (2 * a);
+
+    std::cout << root;
+
+  }
+  // если дискриминант отрицателен, действительных корней нет
+
+  std::cout << std::endl;
 
   return 0;
 }
