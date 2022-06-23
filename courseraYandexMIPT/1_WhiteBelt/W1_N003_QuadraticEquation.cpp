@@ -23,6 +23,7 @@
  * #include <cmath>
  * 2. В случае возникновения вопросов по решению данного уравнения, общую схему
  * решения с разъяснениями можно посмотреть в приложенном файле
+ * https://github.com/nikkutuzov/CPP_education/blob/master/courseraYandexMIPT/Attachments/W1_N003_Algorithm.pdf
  *
  */
 
