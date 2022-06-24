@@ -26,3 +26,8 @@
 
 Шаблоны заданий к задачам
 </a>
+
+<a href=https://github.com/nikkutuzov/CPP_education/tree/master/courseraYandexMIPT/Attachments>
+
+Вложения (подсказки) для заданий
+</a>
