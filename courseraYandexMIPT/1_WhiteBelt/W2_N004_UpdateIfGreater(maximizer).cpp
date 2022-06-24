@@ -3,7 +3,7 @@
 /*================================================================================*/
 /*  Tittle: Update if greater (maximizer)                                         */
 /*  Start_time: 24.06.2022 12:36                                                  */
-/*  End_time:                                                                     */
+/*  End_time: 24.06.2022 12:49                                                    */
 /*  Note:                                                                         */
 /*================================================================================*/
 
@@ -37,7 +37,7 @@
 
 #include <iostream>
 
-void UpdateIfGreater(const int& first, int& second) {
+void UpdateIfGreater(int first, int& second) {
   if (first > second) {
     second = first;
   }
