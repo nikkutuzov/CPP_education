@@ -43,8 +43,6 @@
 #include <algorithm>
 #include <cmath>
 
-/*<-------------------------------------main------------------------------------->*/
-
 void PrintVector(const std::vector<int>& v) {
   for (const int& item : v) {
     std::cout << item << " ";
@@ -52,13 +50,17 @@ void PrintVector(const std::vector<int>& v) {
   std::cout << std::endl;
 }
 
+/*<-------------------------------------main------------------------------------->*/
+
 int main() {
   int count;
   std::cin >> count;
   std::vector<int> numbers(count);
+
   for (int& number : numbers) {
     std::cin >> number;
   }
+
   std::sort(begin(numbers), end(numbers),
       [] (const int& lhs, const int& rhs) {
         return abs(lhs) < abs(rhs);
