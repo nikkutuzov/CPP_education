@@ -2,12 +2,13 @@
 .DS_Store
 
 # work_files
-work_file.cpp
-tmp_file.cpp
+working_file.cp
+tmp_file.cp
+backUp_file.cp
 a.out
 
-# PostScript_files
-*.ps
+# PostScript_file
+file.ps
 
 # PDF_file
 file.pdf
