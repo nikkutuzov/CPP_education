@@ -106,7 +106,8 @@ private:
 };
 
 bool operator== (const Rational& lhs, const Rational& rhs) {
-  return lhs.Numerator() == rhs.Numerator() and lhs.Denominator() == rhs.Denominator();
+  return lhs.Numerator() == rhs.Numerator() and
+         lhs.Denominator() == rhs.Denominator();
 }
 
 Rational operator+ (const Rational& lhs, const Rational& rhs) {
