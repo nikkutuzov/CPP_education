@@ -3,7 +3,7 @@
 /*================================================================================*/
 /*  Title: Calculator of ordinary fractions                                       */
 /*  Start_time: 03.07.2022 17:23                                                  */
-/*  End_time:                                                                     */
+/*  End_time: 03.07.2022                                                                     */
 /*  Note:                                                                         */
 /*================================================================================*/
 
@@ -50,7 +50,7 @@ public:
 
   Rational(int new_numerator, int new_denominator) {
     if (new_denominator == 0) {
-      throw std::invalid_argument("Incorrect fraction");
+      throw std::runtime_error("Invalid argument");
     }
 
     const int GCD = std::gcd(new_numerator, new_denominator);
@@ -97,9 +97,13 @@ Rational operator* (const Rational& lhs, const Rational& rhs) {
 }
 
 Rational operator/ (const Rational& lhs, const Rational& rhs) {
+  if (rhs.Numerator() == 0) {
+    throw std::runtime_error("Division by zero");
+  }
+
   return {
           lhs.Numerator() * rhs.Denominator(),
-          lhs.Denominator() * rhs.Numerator()
+          rhs.Numerator() * lhs.Denominator()
          };
 }
 
