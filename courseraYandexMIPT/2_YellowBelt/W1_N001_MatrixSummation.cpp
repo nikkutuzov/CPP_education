@@ -3,7 +3,7 @@
 /*================================================================================*/
 /*  Title: Matrix summation                                                       */
 /*  Start_time: 04.07.2022 15:26                                                  */
-/*  End_time:                                                                     */
+/*  End_time: 04.07.2022 18:06                                                    */
 /*  Note:                                                                         */
 /*================================================================================*/
 
@@ -113,7 +113,139 @@
 // * оператор проверки на равенство двух объектов класса Matrix
 // * оператор сложения двух объектов класса Matrix
 
-/*<-------------------------------------main------------------------------------->*/
+/*<---------------------------------class_Matrix--------------------------------->*/
+class Matrix {
+public:
+  Matrix() {
+    rows = 0;
+    columns = 0;
+  }
+
+  Matrix(const int num_rows, const int num_cols) {
+    Reset(num_rows, num_cols);
+  }
+
+  void Reset(const int num_rows, const int num_cols) {
+    if (num_rows < 0) {
+      throw std::out_of_range("num_rows must be >= 0");
+    }
+    if (num_cols < 0) {
+      throw std::out_of_range("num_columns must be >= 0");
+    }
+    if (num_rows == 0 or num_cols == 0) {
+      rows = columns = 0;
+    } else {
+      rows = num_rows;
+      columns = num_cols;
+    }
+
+    matrix_numbers.assign(num_rows, std::vector<int>(num_cols));
+  }
+
+  int At(const int number_of_row, const int number_of_col) const {
+    return matrix_numbers.at(number_of_row).at(number_of_col);
+  }
+
+  int& At(const int number_of_row, const int number_of_col) {
+    return matrix_numbers.at(number_of_row).at(number_of_col);
+  }
+
+  int GetNumRows() const {
+    return rows;
+  }
+
+  int GetNumColumns() const {
+    return columns;
+  }
+
+private:
+  int rows;
+  int columns;
+
+  std::vector<std::vector<int>> matrix_numbers;
+};
+
+/*<----------------------------operators_overloading----------------------------->*/
+
+std::istream& operator>> (std::istream& stream, Matrix& matrix) {
+  int rows_count;
+  int cols_count;
+
+  stream >> rows_count >> cols_count;
+
+  matrix.Reset(rows_count, cols_count);
+
+  for (int i = 0; i < rows_count; ++i) {
+    for (int j = 0; j < cols_count; ++j) {
+      stream >> matrix.At(i, j);
+    }
+  }
+
+  return stream;
+}
+
+std::ostream& operator<< (std::ostream& stream, const Matrix& matrix) {
+  const int rows_count = matrix.GetNumRows();
+  const int cols_count = matrix.GetNumColumns();
+
+  stream << rows_count << ' ' << cols_count << std::endl;
+
+  for (int i = 0; i < rows_count; ++i) {
+    for (int j = 0; j < cols_count; ++j) {
+      if (j > 0) {
+        stream << ' ';
+      }
+      stream << matrix.At(i, j);
+    }
+    stream << std::endl;
+  }
+
+  return stream;
+}
+
+bool operator== (const Matrix& lhs, const Matrix& rhs) {
+  if (lhs.GetNumRows() != rhs.GetNumRows() or
+      lhs.GetNumColumns() != rhs.GetNumColumns()) {
+    return false;
+  }
+
+  const int rows_count = lhs.GetNumRows();
+  const int cols_count = lhs.GetNumColumns();
+
+  for (int i = 0; i < rows_count; ++i) {
+    for (int j = 0; j < cols_count; ++j) {
+      if (lhs.At(i, j) != rhs.At(i, j)) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+Matrix operator+ (const Matrix& lhs, const Matrix& rhs) {
+  if (lhs.GetNumRows() != rhs.GetNumRows()) {
+    throw std::invalid_argument("Mismatched number of rows");
+  }
+
+  if (lhs.GetNumColumns() != rhs.GetNumColumns()) {
+    throw std::invalid_argument("Mismatched number of columns");
+  }
+
+  const int rows_count = lhs.GetNumRows();
+  const int cols_count = lhs.GetNumColumns();
+  Matrix result(rows_count, cols_count);
+
+  for (int i = 0; i < rows_count; ++i) {
+    for (int j = 0; j < cols_count; ++j) {
+      result.At(i, j) = lhs.At(i, j) + rhs.At(i, j);
+    }
+  }
+
+  return result;
+}
+
+/*<------------------------------------main-------------------------------------->*/
 
 int main() {
   Matrix one;
