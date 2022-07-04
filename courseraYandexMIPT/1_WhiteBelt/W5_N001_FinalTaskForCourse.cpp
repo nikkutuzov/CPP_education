@@ -3,7 +3,7 @@
 /*================================================================================*/
 /*  Title: FINAL TASK FOR COURSE                                                  */
 /*  Start_time: 03.07.2022 20:16                                                  */
-/*  End_time:                                                                     */
+/*  End_time:04.07.2022 14:34                                                     */
 /*  Note:                                                                         */
 /*================================================================================*/
 
@@ -250,13 +250,14 @@
 #include <stdexcept>
 #include <iomanip>
 
+/*<---------------------------------class_Date----------------------------------->*/
 
 class Date {
 public:
   Date(const int new_year, const int new_month, const int new_day) {
     year = new_year;
 
-    if (new_month < 1 and new_month > 12) {
+    if (new_month < 1 or new_month > 12) {
       throw std::runtime_error(
             "Month value is invalid: " + std::to_string(new_month)
             );
@@ -264,7 +265,7 @@ public:
       month = new_month;
     }
 
-    if (new_day < 1 and new_day > 31) {
+    if (new_day < 1 or new_day > 31) {
       throw std::runtime_error(
             "Day value is invalid: " + std::to_string(new_day)
             );
@@ -291,6 +292,8 @@ private:
   int day;
 };
 
+/*<-----------------------------operators_overloading---------------------------->*/
+
 bool operator< (const Date& lhs, const Date& rhs) {
   return std::vector<int> {lhs.GetYear(), lhs.GetMonth(), lhs.GetDay()} <
          std::vector<int> {rhs.GetYear(), rhs.GetMonth(), rhs.GetDay()};
@@ -302,6 +305,8 @@ std::ostream& operator<< (std::ostream& stream, const Date& date) {
          << std::setw(2) << std::setfill('0') << date.GetDay();
   return stream;
 }
+
+/*<--------------------------------ParseDate_func-------------------------------->*/
 
 Date ParseDate(const std::string& date_from_request) {
   std::istringstream ss(date_from_request);
@@ -328,6 +333,8 @@ Date ParseDate(const std::string& date_from_request) {
   return {year, month, day};
 }
 
+/*<--------------------------------class_Database-------------------------------->*/
+
 class Database {
 public:
   void AddEvent(const Date& date, const std::string& event) {
@@ -353,7 +360,13 @@ public:
     }
   }
 
-  /* ??? */ Find(const Date& date) const;
+  std::set<std::string> Find(const Date& date) const {
+    if (database.count(date) > 0) {
+      return database.at(date);
+    } else {
+      return {};
+    }
+  }
 
   void Print() const {
     for (const auto& [date, events] : database) {
@@ -402,7 +415,12 @@ int main() {
         }
         std::cout << std::endl;
       } else if (request == "Find") {
-
+        std::string date_from_request;
+        ss >> date_from_request;
+        const Date date = ParseDate(date_from_request);
+        for (const std::string& event : db.Find(date)) {
+          std::cout << event << std::endl;
+        }
       } else if (request == "Print") {
         db.Print();
       } else if (!request.empty()) {
