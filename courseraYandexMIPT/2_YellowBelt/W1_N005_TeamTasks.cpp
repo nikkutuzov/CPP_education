@@ -232,14 +232,14 @@ int main() {
 
   TasksInfo updated_tasks, untouched_tasks;
 
-  //tie(updated_tasks, untouched_tasks) = tasks.PerformPersonTasks("Ivan", 2);
+  tie(updated_tasks, untouched_tasks) = tasks.PerformPersonTasks("Ivan", 2);
 
   std::cout << "Updated Ivan's tasks: ";
   PrintTasksInfo(updated_tasks);
   std::cout << "Untouched Ivan's tasks: ";
   PrintTasksInfo(untouched_tasks);
 
-  //tie(updated_tasks, untouched_tasks) = tasks.PerformPersonTasks("Ivan", 2);
+  tie(updated_tasks, untouched_tasks) = tasks.PerformPersonTasks("Ivan", 2);
 
   std::cout << "Updated Ivan's tasks: ";
   PrintTasksInfo(updated_tasks);
