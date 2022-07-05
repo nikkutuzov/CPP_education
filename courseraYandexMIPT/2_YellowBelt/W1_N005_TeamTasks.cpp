@@ -36,7 +36,7 @@
  *   // Обновить статусы по данному количеству задач конкретного разработчика,
  *   // подробности см. ниже
  *   tuple<TasksInfo, TasksInfo> PerformPersonTasks(
- *   const string& person, int task_count);
+ *                               const string& person, int task_count);
  * };
  *
  * Метод PerformPersonTasks должен реализовывать следующий алгоритм:
@@ -185,16 +185,35 @@ using TasksInfo = std::map<TaskStatus, int>;
 class TeamTasks {
 public:
   // Получить статистику по статусам задач конкретного разработчика
-  const TasksInfo& GetPersonTasksInfo(const std::string& person) const;
+  const TasksInfo& GetPersonTasksInfo(const std::string& person) const {
+    return developers.at(person);
+  }
 
   // Добавить новую задачу (в статусе NEW) для конкретного разработчитка
-  void AddNewTask(const std::string& person);
+  void AddNewTask(const std::string& person) {
+    ++developers[person][TaskStatus::NEW];
+  }
 
   // Обновить статусы по данному количеству задач конкретного разработчика,
-  // подробности см. ниже
-  tuple<TasksInfo, TasksInfo> PerformPersonTasks(
-  const std::string& person, int task_count);
+  std::tuple<TasksInfo, TasksInfo> PerformPersonTasks(const std::string& person,
+                                                      int task_count) {
+    TasksInfo updated;
+    TasksInfo not_updated;
+
+    return {updated, not_updated};
+  }
+
+private:
+  std::map<std::string, TasksInfo> developers;
 };
+
+void PrintTasksInfo(TasksInfo tasks_info) {
+  std::cout << tasks_info[TaskStatus::NEW] << " new tasks"
+            << ", " << tasks_info[TaskStatus::IN_PROGRESS] << " tasks in progress"
+            << ", " << tasks_info[TaskStatus::TESTING] << " tasks are being tested"
+            << ", " << tasks_info[TaskStatus::DONE] << " tasks are done"
+            << std::endl;
+ }
 
 /*<-------------------------------------main------------------------------------->*/
 
@@ -213,14 +232,14 @@ int main() {
 
   TasksInfo updated_tasks, untouched_tasks;
 
-  tie(updated_tasks, untouched_tasks) = tasks.PerformPersonTasks("Ivan", 2);
+  //tie(updated_tasks, untouched_tasks) = tasks.PerformPersonTasks("Ivan", 2);
 
   std::cout << "Updated Ivan's tasks: ";
   PrintTasksInfo(updated_tasks);
   std::cout << "Untouched Ivan's tasks: ";
   PrintTasksInfo(untouched_tasks);
 
-  tie(updated_tasks, untouched_tasks) = tasks.PerformPersonTasks("Ivan", 2);
+  //tie(updated_tasks, untouched_tasks) = tasks.PerformPersonTasks("Ivan", 2);
 
   std::cout << "Updated Ivan's tasks: ";
   PrintTasksInfo(updated_tasks);
