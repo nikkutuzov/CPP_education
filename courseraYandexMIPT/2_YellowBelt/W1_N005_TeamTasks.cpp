@@ -167,6 +167,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <map>
 #include <tuple>
 
@@ -181,6 +182,22 @@ enum class TaskStatus {
 // Объявляем тип-синоним для map<TaskStatus, int>,
 // позволяющего хранить количество задач каждого статуса
 using TasksInfo = std::map<TaskStatus, int>;
+
+TaskStatus NextStatus(const TaskStatus& task_status) {
+  return static_cast<TaskStatus>(static_cast<int>(task_status) + 1);
+}
+
+void RemoveZeros(TasksInfo& tasks_info) {
+  std::vector<TaskStatus> statuses_to_remove;
+  for (const auto& task_item : tasks_info) {
+    if (task_item.second == 0) {
+      statuses_to_remove.push_back(task_item.first);
+    }
+  }
+  for (const TaskStatus status : statuses_to_remove) {
+    tasks_info.erase(status);
+  }
+}
 
 class TeamTasks {
 public:
@@ -199,6 +216,28 @@ public:
                                                       int task_count) {
     TasksInfo updated;
     TasksInfo not_updated;
+
+    TasksInfo& tasks = developers[person];
+
+    for (TaskStatus status = TaskStatus::NEW;
+         status != TaskStatus::DONE;
+         status = NextStatus(status)) {
+      updated[NextStatus(status)] = std::min(task_count, tasks[status]);
+      task_count = task_count - updated[NextStatus(status)];
+    }
+
+    for (TaskStatus status = TaskStatus::NEW;
+         status != TaskStatus::DONE;
+         status = NextStatus(status)) {
+      not_updated[status] = tasks[status] - updated[NextStatus(status)];
+      tasks[status] += updated[status] - updated[NextStatus(status)];
+    }
+
+    tasks[TaskStatus::DONE] += updated[TaskStatus::DONE];
+
+    RemoveZeros(updated);
+    RemoveZeros(not_updated);
+    RemoveZeros(developers.at(person));
 
     return {updated, not_updated};
   }
