@@ -1,12 +1,12 @@
 # CPP_education
 
-Репозиторий, созданный при изучении ЯП C++
+Репозиторий, созданный при изучении C/C++
 
 Директории:
 
 <a href=https://github.com/nikkutuzov/CPP_education/tree/master/algorithms>
 
-Реализация некоторых алгоритмов
+Реализация некоторых алгоритмов на c
 </a>
 
 <a href=https://github.com/nikkutuzov/CPP_education/tree/master/courseraYandexMIPT>
