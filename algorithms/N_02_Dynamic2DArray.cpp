@@ -1,7 +1,7 @@
 /*================================================================================*/
-/*                   Some_algorithms_with_C/C++_implementation                    */
+/*                    Some_algorithms_with_C++_implementation                     */
 /*================================================================================*/
-/*  Title: Dynamic 2D array - Динамический двумерный массив                       */
+/*  Title: Dynamic 2D array - Двумерный динамический массив                       */
 /*  Note:                                                                         */
 /*================================================================================*/
 
@@ -34,6 +34,7 @@ void printArray (int **arr, int N, int M);
 
 int main() {
   int N, M;
+
   std::cout << "Введите количество строк: ";
   std::cin >> N;
   std::cout << "Введите количество столбцов: ";
@@ -70,18 +71,18 @@ int main() {
 /*<-----------------------------definition_of_funcs------------------------------>*/
 
 void fillArray (int **arr, int N, int M) {
-    for (int i = 0; i < N; ++i) {       // i - номер строки
-        for (int j = 0; j < M; ++j) {   // j - номер столбца
-            arr[i][j] = i * M + j + 1;
-        }
+  for (int i = 0; i < N; ++i) {             // i - номер строки
+    for (int j = 0; j < M; ++j) {           // j - номер столбца
+      arr[i][j] = i * M + j + 1;
     }
+  }
 }
 
 void printArray (int **arr, int N, int M) {
-    for (int i = 0; i < N; ++i) {       // i - номер строки
-        for (int j = 0; j < M; ++j) {   // j - номер столбца
-            std::cout << arr[i][j] << '\t';
-        }
-        std::cout << std::endl;
+  for (int i = 0; i < N; ++i) {             // i - номер строки
+    for (int j = 0; j < M; ++j) {           // j - номер столбца
+      std::cout << arr[i][j] << '\t';
     }
+    std::cout << std::endl;
+  }
 }
