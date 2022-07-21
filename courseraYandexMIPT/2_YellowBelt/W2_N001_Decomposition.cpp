@@ -2,7 +2,7 @@
 /*                    C++_Development_Basics: The_Yellow_Belt                     */
 /*================================================================================*/
 /*  Title: Program decomposition                                                  */
-/*  Start_time:                                                                   */
+/*  Start_time: 21.07.2022 10:54                                                  */
 /*  End_time:                                                                     */
 /*  Note:                                                                         */
 /*================================================================================*/
@@ -22,11 +22,11 @@
  *
  * Авторское решение этой задачи содержится в файле:
  * correct.cpp
- * https://github.com/nikkutuzov/courseraYandexMIPT/blob/master/Templates/2_YB_W2_001_decomposition/correct.cpp
+ * https://github.com/nikkutuzov/CPP_education/blob/master/courseraYandexMIPT/Templates/2_YB_W2_N001_decomposition/correct.cpp
  *
  * Кроме того, вам дан файл:
  * starter.cpp
- * https://github.com/nikkutuzov/courseraYandexMIPT/blob/master/Templates/2_YB_W2_001_decomposition/starter.cpp
+ * https://github.com/nikkutuzov/CPP_education/blob/master/courseraYandexMIPT/Templates/2_YB_W2_N001_decomposition/starter.cpp
  * ...который содержит заготовки классов и функций. Не меняя функцию main, вам надо
  * реализовать эти классы и функции так, чтобы получившаяся программа решала задачу
  * "Автобусные остановки - 1".
@@ -118,6 +118,10 @@
 /*<=====================================CODE=====================================>*/
 
 #include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <utility>
 
 enum class QueryType {
   NewBus,
@@ -134,57 +138,130 @@ struct Query {
 };
 
 std::istream& operator >> (std::istream& is, Query& q) {
-  // Реализуйте эту функцию
+  std::string typeStr;
+  is >> typeStr;
+  if (typeStr == "NEW_BUS") {
+    q.type = QueryType::NewBus;
+    is >> q.bus;
+    int stop_count = 0;
+    is >> stop_count;
+    q.stops.resize(stop_count);
+    for (auto& stop : q.stops) {
+      is >> stop;
+    }
+  } else if (typeStr == "BUSES_FOR_STOP") {
+    q.type = QueryType::BusesForStop;
+    is >> q.stop;
+  } else if (typeStr == "STOPS_FOR_BUS") {
+    q.type = QueryType::StopsForBus;
+    is >> q.bus;
+  } else if (typeStr == "ALL_BUSES") {
+    q.type = QueryType::AllBuses;
+  }
+
   return is;
 }
 
 struct BusesForStopResponse {
-  // Наполните полями эту структуру
+  std::vector<std::string> buses;
 };
 
 std::ostream& operator << (std::ostream& os, const BusesForStopResponse& r) {
-  // Реализуйте эту функцию
+  if (r.buses.empty()) {
+    os << "No stop";
+  } else {
+    for (const auto& bus : r.buses) {
+      os << bus << " ";
+    }
+  }
+
   return os;
 }
 
 struct StopsForBusResponse {
-  // Наполните полями эту структуру
+  std::string bus;
+  std::vector<std::pair<std::string, std::vector<std::string>>> stops_for_buses;
 };
 
 std::ostream& operator << (std::ostream& os, const StopsForBusResponse& r) {
-  // Реализуйте эту функцию
+   if (r.stops_for_buses.empty()) {
+    os << "No bus";
+  } else {
+    for (const auto& [key, value] : r.stops_for_buses) {
+      os << "Stop " << key << ": ";
+      if (value.size() == 1) {
+        os << "no interchange" << std::endl;;
+      } else {
+        for (const auto& bus : value) {
+          if (bus != r.bus) {
+            os << " " << bus;
+          }
+        }
+        os << std::endl;
+      }
+    }
+  }
+
   return os;
 }
 
 struct AllBusesResponse {
-  // Наполните полями эту структуру
+  std::map<std::string, std::vector<std::string>> buses_for_stops;
 };
 
 std::ostream& operator << (std::ostream& os, const AllBusesResponse& r) {
-  // Реализуйте эту функцию
+  if (r.buses_for_stops.empty()) {
+    os << "No buses";
+  } else {
+    for (const auto& [key, value] : r.buses_for_stops) {
+      os << "Bus " << key << ":";
+      for (const auto& stop : value) {
+        os << " " << stop;
+      }
+      os << std::endl;
+    }
+  }
+
   return os;
 }
 
 class BusManager {
 public:
   void AddBus(const std::string& bus, const std::vector<std::string>& stops) {
-    // Реализуйте этот метод
+    buses_for_stop.insert(std::make_pair(bus, stops));
+    for (const auto& stop : stops) {
+      stops_for_bus[stop].push_back(bus);
+    }
   }
 
   BusesForStopResponse GetBusesForStop(const std::string& stop) const {
-    // Реализуйте этот метод
+    if (stops_for_bus.count(stop) == 0) {
+      return BusesForStopResponse{std::vector<std::string>()};
+    } else {
+      return BusesForStopResponse{stops_for_bus.at(stop)};
+    }
   }
 
   StopsForBusResponse GetStopsForBus(const std::string& bus) const {
-    // Реализуйте этот метод
+    std::vector<std::pair<std::string, std::vector<std::string>>> result;
+
+    if (buses_for_stop.count(bus) > 0) {
+      for (const auto& stop : buses_for_stop.at(bus)) {
+        result.push_back(std::make_pair(stop, stops_for_bus.at(stop)));
+      }
+    }
+
+    return StopsForBusResponse{bus, result};
   }
 
   AllBusesResponse GetAllBuses() const {
-    // Реализуйте этот метод
+    return AllBusesResponse{buses_for_stop};
   }
-};
 
-// Не меняя тела функции main, реализуйте функции и классы выше
+private:
+  std::map<std::string, std::vector<std::string>> buses_for_stop;
+  std::map<std::string, std::vector<std::string>> stops_for_bus;
+};
 
 /*<-------------------------------------main------------------------------------->*/
 
