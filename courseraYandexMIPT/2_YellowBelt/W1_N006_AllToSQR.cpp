@@ -67,12 +67,27 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+#include <utility>
 
 /*<----------------------------declaration_of_funcs------------------------------>*/
 
 // Предварительное объявление шаблонных функций
-template<typename T> T FuncA(T x);
-template<typename T> void FuncB(T x);
+  // для простых действий
+template <typename T>
+T Sqr(T x);
+
+  // для vector
+template <typename T>
+std::vector<T> Sqr(const std::vector<T>& v);
+
+  // для pair
+template <typename First, typename Second>
+std::pair<First, Second> Sqr(const std::pair<First, Second>& p);
+
+  // для map
+template <typename Key, typename Value>
+std::map<Key, Value> Sqr(const std::map<Key, Value>& m);
 
 /*<-------------------------------------main------------------------------------->*/
 
@@ -102,9 +117,36 @@ int main() {
 
 /*<-----------------------------definition_of_funcs------------------------------>*/
 
-// Объявляем шаблонные функции
+// Определяем шаблонные функции
 template <typename T>
-T FuncA(T x) { /*...*/ }
+T Sqr(T x) {
+  return x * x;
+}
 
 template <typename T>
-void FuncB(T x) { /*...*/ }
+std::vector<T> Sqr(const std::vector<T>& v) {
+  std::vector<T> res;
+  for (const T& item : v) {
+    res.push_back(Sqr(item));
+  }
+
+  return res;
+}
+
+template <typename First, typename Second>
+std::pair<First, Second> Sqr(const std::pair<First, Second>& p) {
+  First first = Sqr(p.first);
+  Second second = Sqr(p.second);
+
+  return std::make_pair(first, second);
+}
+
+template <typename Key, typename Value>
+std::map<Key, Value> Sqr(const std::map<Key, Value>& m) {
+  std::map<Key, Value> res;
+  for (const auto& [key, value] : m) {
+    res[key] = Sqr(value);
+  }
+
+  return res;
+}
