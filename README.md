@@ -6,7 +6,7 @@
 
 <a href=https://github.com/nikkutuzov/CPP_education/tree/master/algorithms>
 
-Реализация некоторых алгоритмов на c
+Реализация некоторых алгоритмов на C
 </a>
 
 <a href=https://github.com/nikkutuzov/CPP_education/tree/master/courseraYandexMIPT>
