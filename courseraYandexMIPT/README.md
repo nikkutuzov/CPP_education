@@ -31,3 +31,8 @@
 
 Вложения (подсказки) для заданий
 </a>
+
+<a href=https://github.com/nikkutuzov/CPP_education/tree/master/courseraYandexMIPT/etc>
+
+Прочее - различные стандартные коды: юнит-тесты, функции и т.д.
+</a>
