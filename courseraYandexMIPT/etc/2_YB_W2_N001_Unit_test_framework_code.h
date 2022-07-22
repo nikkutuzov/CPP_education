@@ -1,6 +1,24 @@
 /*================================================================================*/
 /*                           Unit test framework code                             */
 /*================================================================================*/
+
+/* ***HOW TO USE***
+ *
+ * #include "test_runner.h"
+ *
+ * void TestWorks() {
+ *   AssertEqual(1, 1, "Just to check that Assert works");
+ * }
+ *
+ * int main() {
+ *   TestRunner tr;
+ *   tr.RunTest(TestWorks, "TestWorks");
+ *  
+ *   return 0;
+ * }
+ *
+ */
+
 #pragma once // included only once
 
 #include <iostream>
