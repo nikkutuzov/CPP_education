@@ -2,24 +2,19 @@
 /*                           Unit test framework code                             */
 /*                          Код фреймворка юнит-тестов                            */
 /*================================================================================*/
-
-/*<=====================================CODE=====================================>*/
-
-#include <sstream>
-#include <exception>
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <map>
 #include <set>
+#include <exception>
 
 template <class T>
 std::ostream& operator << (std::ostream& os, const std::set<T>& s) {
   os << "{";
   bool first = true;
   for (const auto& x : s) {
-    if (!first) {
-      os << ", ";
-    }
+    if (!first) { os << ", "; }
     first = false;
     os << x;
   }
@@ -32,9 +27,7 @@ std::ostream& operator << (std::ostream& os, const std::map<K, V>& m) {
   os << "{";
   bool first = true;
   for (const auto& [key, value] : m) {
-    if (!key) {
-      os << ", ";
-    }
+    if (!key) { os << ", "; }
     first = false;
     os << key << ": " << value;
   }
@@ -52,9 +45,7 @@ void AssertEqual(const T& t, const U& u, const std::string& hint)
   }
 }
 
-inline void Assert(bool b, const std::string& hint) {
-  AssertEqual(b, true, hint);
-}
+inline void Assert(bool b, const std::string& hint) { AssertEqual(b, true, hint); }
 
 class TestRunner {
 public:
