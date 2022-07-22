@@ -3,7 +3,7 @@
 /*================================================================================*/
 /*  Title: Tests for class Rational                                               */
 /*  Start_time: 21.07.2022 23:25                                                  */
-/*  End_time:                                                                     */
+/*  End_time: 22.07.2022 10:28                                                    */
 /*  Note:                                                                         */
 /*================================================================================*/
 
@@ -55,12 +55,12 @@
 /*<=====================================CODE=====================================>*/
 
 #include <iostream>
+#include <string>
+#include <vector>
 #include <map>
 #include <set>
 #include <sstream>
 #include <stdexcept>
-#include <string>
-#include <vector>
 
 template <class T>
 std::ostream& operator << (std::ostream& os, const std::vector<T>& s) {
@@ -165,13 +165,72 @@ public:
   }
 };
 
+// Равно
+bool operator== (const Rational& lhs, const Rational& rhs){
+  return lhs.Numerator() == rhs.Numerator() and
+         lhs.Denominator() == rhs.Denominator();
+}
+// Не равно
+bool operator!= (const Rational& lhs, const Rational& rhs){
+  return !(lhs == rhs);
+}
+// Вывод в поток
+std::ostream& operator<< (std::ostream& os, const Rational& rational){
+    os << rational.Numerator() << "/" << rational.Denominator();
+    return os;
+}
 
+void TestCreateRational(){
+  std::string test_name = "Test create object: ";
+
+  {
+    // По умолчанию числитель равен 0, знаменатель равен 1
+    Rational r, r_expected(0, 1);
+    AssertEqual(r, r_expected, "Test default constructor");
+  }
+
+  {
+    // Сокращение дроби при создании
+    Rational r(2,4), r_experted(1, 2);
+    AssertEqual(r, r_experted, "Reduce after create. Positive");
+
+    r = Rational(-3, 6);
+    r_experted = Rational(-1, 2);
+    AssertEqual(r, r_experted, "Reduce after create. Negative");
+
+    r = Rational(4, 2);
+    r_experted = Rational(2, 1);
+    AssertEqual(r, r_experted, "Reduce after create. Denomitator < Numerator");
+
+  }
+
+  {
+    // Отрицательные дроби
+    Rational r(3, -5), r_expected(-3, 5);
+    AssertEqual(r, r_expected, "Negative rational");
+  }
+
+  {
+    // Положительные дроби
+    Rational r(-2, -5), r_expected(2, 5);
+    AssertEqual(r, r_expected, "Positive rational");
+  }
+
+  {
+    // Нулевой числитель
+    Rational r(0, 43), r_expected(0, 1);
+    AssertEqual(r, r_expected, "Numerator = 0, denominator > 0");
+    r = Rational(0, -43);
+    AssertEqual(r, r_expected, "Numerator = 0, denominator < 0");
+  }
+}
 
 /*<-------------------------------------main------------------------------------->*/
 
 int main() {
   TestRunner runner;
   // добавьте сюда свои тесты
+  runner.RunTest(TestCreateRational, "TestCreateRational");
 
   return 0;
 }
