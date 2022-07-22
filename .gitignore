@@ -7,7 +7,6 @@ tmp_file.cp
 backUp_file.cp
 a.out
 file
-Makefile
 
 # PostScript_file
 file.ps
