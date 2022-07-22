@@ -3,7 +3,7 @@
 /*================================================================================*/
 /*  Title: Tests for func IsPalindrome                                            */
 /*  Start_time: 22.07.2022 10:34                                                  */
-/*  End_time:                                                                     */
+/*  End_time: 22.07.2022 11:04                                                    */
 /*  Note:                                                                         */
 /*================================================================================*/
 
@@ -37,7 +37,7 @@
  * Начать работу вы можете с шаблона, который содержит наш фреймворк юнит-тестов и
  * заготовку функции IsPalindrom.
  *
- *
+ * https://github.com/nikkutuzov/CPP_education/blob/master/courseraYandexMIPT/Templates/2_YB_W2_N005_IsPalindrome/test_palindrome.cpp
  *
  */
 
@@ -137,12 +137,97 @@ private:
   int fail_count = 0;
 };
 
+bool IsPalindrome(const std::string& str) {
+  // Вы можете вставлять сюда различные реализации функции,
+  // чтобы проверить, что ваши тесты пропускают корректный код
+  // и ловят некорректный
+}
+
+void TestIsPalindrome(){
+  std::string str="";
+  {
+    // Пустая строка - палиндром
+    Assert(IsPalindrome(str), str + " Empty string is palindrome");
+    // Строка из одного символа - палиндром
+    str = "a";
+    Assert(IsPalindrome(str), str + " One char string is palindrome");
+    str = "1";
+    Assert(IsPalindrome(str), str + " One char string is palindrome");
+    str = "!";
+    Assert(IsPalindrome(str), str + " One char string is palindrome");
+    str = "ABBA";
+    Assert(IsPalindrome(str), str + " Uppercase");
+    str = " ";
+    Assert(IsPalindrome(str), str + " One white-space string is palindrome");
+    str = "ABcBA";
+    Assert(IsPalindrome(str), str + " Odd numbers of chars");
+    str = "####";
+    Assert(IsPalindrome(str), str + " Even numbers of chars");
+    // Палиндром из цифр
+    str = "12345678987654321";
+    Assert(IsPalindrome(str), "String " + str + "is numeric palindrome");
+    // Палиндром из пунктуационных знаков
+    str = "!@#$%^&*()_++_)(*&^%$#@!";
+    Assert(IsPalindrome(str), "String " + str + " is symbols palindrome");
+
+    str = "-madam-";
+    Assert(IsPalindrome(str), "String" + str + " is a palindrome.");
+
+    str = "|m a d a m|";
+    Assert(IsPalindrome(str), "String" + str + " is a palindrome.");
+
+    str = "\" \"";
+    Assert(IsPalindrome(str), "String" + str + " is a palindrome.");
+
+    str = "\tab\nba\t";
+    Assert(IsPalindrome(str), "String" + str + " is a palindrome.");
+  }
+}
+
+void TestIsNotPalindrome(){
+  std::string str;
+  // Игнорирование символов
+  str = "a ba";
+  Assert(!IsPalindrome(str), "String " + str +
+         " is not a palindrome. Ignore symbol int the middle of string");
+  str = " aba";
+  Assert(!IsPalindrome(str), "String " + str +
+         " is not a palindrome. Ignore symbol in the start of  string");
+  str = "aba!";
+  Assert(!IsPalindrome(str), "String" + str +
+         " is not a palindrome. Ignore ! in the end of string");
+  str = " m  ada m   ";
+  Assert(!IsPalindrome(str), "String" + str +
+      " is not a palindrome. Skipping white-space characters");
+
+  // Сравнение завершается на середине строки
+  str = "ABc ab cBA";
+  Assert(!IsPalindrome(str), "String " + str +
+         " is not a palindrome. Did not compare symbol in the middle of string");
+  str = "AbcBa";
+  Assert(!IsPalindrome(str), "String " + str +
+         " is not a palindrome. Case sensetive");
+  str = "\tabba ";
+  Assert(!IsPalindrome(str), "String " + str +
+         " is not a palindrome. Tab in the start");
+  str = " abba\t";
+  Assert(!IsPalindrome(str), "String " + str +
+         " is not a palindrome. Tab in the end");
+  str = "ab\t ba";
+  Assert(!IsPalindrome(str), "String " + str +
+         " is not a palindrome. Tab in the middle");
+  str = "\nabcba";
+  Assert(!IsPalindrome(str), "String " + str +
+         " is not a palindrome. \n in the start");
+}
 
 /*<-------------------------------------main------------------------------------->*/
 
 int main() {
   TestRunner runner;
   // добавьте сюда свои тесты
+  runner.RunTest(TestIsPalindrome, "TestIsPalindrome");
+  runner.RunTest(TestIsNotPalindrome, "TestIsNotPalindrome");
 
   return 0;
 }
