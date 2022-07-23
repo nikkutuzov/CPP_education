@@ -28,8 +28,8 @@
 #include "phone_number.h"
 
 /*<-------------------------------------main------------------------------------->*/
-// ПРИ ОТПРАВКЕ НА ПРОВЕРКУ НУЖНО УДАЛИТЬ ФУНКЦИЮ main()
-// я оставил ее только для проверки компиляции!
+// !!! ПРИ ОТПРАВКЕ НА ПРОВЕРКУ НУЖНО УДАЛИТЬ ФУНКЦИЮ main() !!!
+// оставил ее только для проверки компиляции!
 int main() {
 
   return 0;
@@ -37,7 +37,9 @@ int main() {
 
 /*<-----------------------definition_of_funcs_and_classes------------------------>*/
 
-PhoneNumber::PhoneNumber(const std::string &international_number) {}
+PhoneNumber::PhoneNumber(const std::string &international_number) {
+  
+}
 
 std::string PhoneNumber::GetCountryCode() const {
   return country_code_;
